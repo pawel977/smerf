@@ -10,6 +10,12 @@ import { MatDrawer } from '@angular/material/sidenav';
 })
 export class SideBarComponent implements AfterViewInit {
   @ViewChild('drawer', { static: false }) public drawer!: MatDrawer;
+  public categoryList = [
+    {
+      title: 'polej',
+      link: '/we-polej',
+    },
+  ];
   constructor(private navBarService: NavBarService) {}
   public ngAfterViewInit(): void {
     this.initReferenceToSideNav();

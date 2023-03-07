@@ -2,5 +2,14 @@
   --white: #ffffff;
   --black: #000000;
 }
-html, body { min-height: 100vh; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { min-height: 100vh; height: auto;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif}
+
+html, body, #fullheight {
+  min-height: calc(100vh - 67px)
+}
+
+
+.font-center {
+   text-align: center;
+}

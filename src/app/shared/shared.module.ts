@@ -7,16 +7,29 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RouterModule } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [SeoComponent, NavBarComponent, SideBarComponent],
+  declarations: [
+    SeoComponent,
+    NavBarComponent,
+    SideBarComponent,
+    PageNotFoundComponent,
+  ],
   imports: [
     CommonModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
+    MatListModule,
+    RouterModule,
+    MatDialogModule,
   ],
   exports: [CommonModule, SeoComponent, SideBarComponent],
+  providers: [MatDialog],
 })
 export class SharedModule {}
