@@ -6,13 +6,18 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { MainComponent } from './main/main.component';
-import { DrinkComponent } from './drink-game/drink/drink.component';
+import { DrinkComponent } from './drink-game/components/drink/drink.component';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { InitGameByNameComponent } from './drink-game/modals/init-game-by-name/init-game-by-name.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { GameComponent } from './drink-game/components/game/game.component';
+import { PlayerCardComponent } from './drink-game/components/player-card/player-card.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { AddPlayerComponent } from './drink-game/modals/add-player/add-player.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +25,9 @@ import { MatInputModule } from '@angular/material/input';
     MainComponent,
     DrinkComponent,
     InitGameByNameComponent,
+    GameComponent,
+    PlayerCardComponent,
+    AddPlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +39,8 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatIconModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
