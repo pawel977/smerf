@@ -20,3 +20,11 @@
   height: 80%;
   min-height: 200px;
 }
+
+.list {
+  width: 40%;
+
+  & > list-item {
+    margin-bottom: 30px !important;
+  }
+}

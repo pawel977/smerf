@@ -1,13 +1,16 @@
-<mat-card >
+<mat-card class="example-card" *ngIf="playerData">
   <mat-card-header>
-    <mat-card-title-group>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Small</mat-card-subtitle>
-      <img mat-card-sm-image [src]="playerData?.getImg()" >
-    </mat-card-title-group>
+    <div mat-card-avatar class="example-header-image">
+      <img [src]="playerData?.getImg()">
+    </div>
+    <mat-card-title>{{playerData?.getNick()}}</mat-card-title>
+    <mat-card-subtitle>pijący: <mat-slide-toggle color="primary" [checked]="playerData?.getCzyWciazPije()" (change)="onChangeIsDrinkingActive($event, playerData)"></mat-slide-toggle></mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-
-
+    <p>
+      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+      bred for hunting.
+    </p>
   </mat-card-content>
 </mat-card>

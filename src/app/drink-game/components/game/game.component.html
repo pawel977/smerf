@@ -16,8 +16,8 @@
     <mat-divider></mat-divider>
     <section class="bottom">
       <div class="list">
-        <ng-container *ngFor="let player of players$ | async">
-          <app-player-card [playerData]="player"></app-player-card>
+        <ng-container *ngFor="let player of players$ | async; let i = index">
+          <app-player-card [playerData]="player" (emitModifyUser)="handleEmitModifyUser($event, i)" class="list-item"></app-player-card>
         </ng-container>
       </div>
     </section>

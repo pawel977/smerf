@@ -18,6 +18,7 @@ import { PlayerCardComponent } from './drink-game/components/player-card/player-
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { AddPlayerComponent } from './drink-game/modals/add-player/add-player.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddPlayerComponent } from './drink-game/modals/add-player/add-player.co
     MatInputModule,
     MatIconModule,
     MatMenuModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

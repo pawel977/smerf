@@ -27,9 +27,16 @@ export class GameComponent implements OnInit {
 
   public ngOnInit(): void {
     this._setGameNameOnInit();
-    this.addPlayerOpenModal();
+    this.setPlayers();
   }
 
+  public setPlayers(): void {
+    this.players$.next(
+      this.gameLifecycleService.getUsersForCurrentGame(
+        this._currentGameName.value
+      )
+    );
+  }
   public addPlayerOpenModal() {
     const dialogRef = this.dialog.open(AddPlayerComponent, {
       width: '80%',
@@ -37,16 +44,21 @@ export class GameComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
       this.gameLifecycleService.createAndAddToExistingGame(
         { nick: result?.nick, imgUrl: result?.imgUrl },
         this._currentGameName.value
       );
+      this.setPlayers();
     });
   }
 
   private _setGameNameOnInit(): void {
     const snapshotUrl = this._route.snapshot.url;
     this._currentGameName.next(snapshotUrl[snapshotUrl.length - 1].path);
+  }
+
+  handleEmitModifyUser(event: Player, i: number) {
+    console.log({ event, i });
+    this.gameLifecycleService.modifyUser(event, i, this._currentGameName.value);
   }
 }

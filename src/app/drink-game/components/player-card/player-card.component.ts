@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Player } from '../../classes/player';
 
 @Component({
@@ -6,10 +13,16 @@ import { Player } from '../../classes/player';
   templateUrl: './player-card.component.html',
   styleUrls: ['./player-card.component.scss'],
 })
-export class PlayerCardComponent implements OnInit {
+export class PlayerCardComponent {
   @Input()
   playerData: Player | undefined;
+  @Output()
+  emitModifyUser: EventEmitter<Player> = new EventEmitter<Player>();
   constructor() {}
 
-  ngOnInit(): void {}
+  onChangeIsDrinkingActive(event: any, playerData: Player): void {
+    const valueCheckbox = event.checked;
+    playerData.setCzyWciazPije(valueCheckbox);
+    this.emitModifyUser.emit(playerData);
+  }
 }

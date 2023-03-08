@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RouterModule } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     RouterModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   exports: [CommonModule, SeoComponent, SideBarComponent],
   providers: [MatDialog],
