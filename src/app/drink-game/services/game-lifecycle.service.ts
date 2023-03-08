@@ -45,13 +45,43 @@ export class GameLifecycleService {
 
   public createAndAddToExistingGame(data: any, gameNameString: string): void {
     const res = this.getData();
-    console.log({ res });
-    if (!this.gameWithThisNameNotCreated(gameNameString)) {
-      console.log(this.gameWithThisNameNotCreated(gameNameString));
-      return;
-    }
+
     const player: Player = this.createNewPlayer(data);
-    const currentGameObj = this.getCurrentGameObject(res, gameNameString);
+    const currentGameObj: any = this.getCurrentGameObject(res, gameNameString);
+    const existingPlayers: Player[] = currentGameObj.game.membersOfGame;
+    const indexIfExisting = existingPlayers.findIndex(
+      (e: any) => e.nick === player.getNick()
+    );
+
+    console.log({ res });
+    if (this.gameWithThisNameNotCreated(gameNameString)) {
+      const resFullData = res[currentGameObj.index];
+      resFullData.membersOfGame.push(player);
+      debugger;
+      this._localStoradgeService.saveData(
+        this._key,
+        JSON.stringify(resFullData)
+      );
+    }
+
+    console.log({ indexIfExisting });
+    if (indexIfExisting !== -1) {
+      //err
+      console.error('exist');
+      return;
+    } else {
+      console.log({
+        jaDupia: res[currentGameObj.index],
+        currentGameObj,
+        res,
+      });
+      const resFullData = res[currentGameObj.index];
+      resFullData.membersOfGame.push(player);
+
+      const xd = res;
+      xd[currentGameObj.index] = resFullData;
+      this._localStoradgeService.saveData(this._key, JSON.stringify(xd));
+    }
     console.log(currentGameObj);
   }
 
@@ -59,7 +89,7 @@ export class GameLifecycleService {
     data: any,
     gameNameString: string
   ): { game: Object; index: number } {
-    console.log(1);
+    console.log('getCurrentGameObject', { data });
     const index = data.findIndex(
       (item: any) => item.gameName === gameNameString
     );
@@ -78,19 +108,11 @@ export class GameLifecycleService {
 
   public gameWithThisNameNotCreated(name: string): boolean {
     const data = this.getData();
-    console.log({ data, name });
-    return <boolean>(data.findIndex((e: any) => e.gameName === name) !== -1);
-  }
-
-  public str2obj(str: string) {
-    return str
-      .split(',')
-      .map(keyVal => {
-        return keyVal.split(':').map(_ => _.trim());
-      })
-      .reduce((accumulator: any, currentValue) => {
-        accumulator[currentValue[0]] = currentValue[1];
-        return accumulator;
-      }, {});
+    console.log({
+      data,
+      name,
+      xd: data.findIndex((e: any) => e.gameName === name),
+    });
+    return <boolean>(data.findIndex((e: any) => e.gameName === name) === -1);
   }
 }
