@@ -1,13 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Player } from '../../classes/player';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { RemoveSteps } from '../../models/remove-steps';
 
 @Component({
   selector: 'app-remove-player',
   templateUrl: './remove-player.component.html',
   styleUrls: ['./remove-player.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class RemovePlayerComponent {
   public enumRemoveSteps: typeof RemoveSteps = RemoveSteps;
