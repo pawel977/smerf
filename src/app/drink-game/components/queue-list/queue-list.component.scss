@@ -1,0 +1,16 @@
+h3{
+  margin: 0;
+  margin-right: 20px;
+  vertical-align: text-bottom;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.list {
+  width: 400px;
+  height: 70vh;
+  min-height: 500px;
+  overflow-y: auto;
+}

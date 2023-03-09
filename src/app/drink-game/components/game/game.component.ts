@@ -9,6 +9,8 @@ import { GameLifecycleService } from '../../services/game-lifecycle.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditPlayerComponent } from '../../modals/edit-player/edit-player.component';
 import { RemovePlayerComponent } from '../../modals/remove-player/remove-player.component';
+import { QueuePlayer } from '../../classes/queue-player';
+import { ConfigComponent } from '../../modals/config/config.component';
 
 @Component({
   selector: 'app-game',
@@ -21,6 +23,8 @@ export class GameComponent implements OnInit {
   );
   private _currentGameName: BehaviorSubject<string> =
     new BehaviorSubject<string>('');
+  // @ts-ignore
+  queuePlayers$: BehaviorSubject<QueuePlayer[]> = new BehaviorSubject([]);
 
   constructor(
     private _route: ActivatedRoute,
@@ -32,6 +36,7 @@ export class GameComponent implements OnInit {
   public ngOnInit(): void {
     this._setGameNameOnInit();
     this.setPlayers();
+    this.setQueue();
   }
 
   public setPlayers(): void {
@@ -118,5 +123,19 @@ export class GameComponent implements OnInit {
       );
       this.setPlayers();
     });
+  }
+
+  handleGenereteNewQueue() {
+    this.gameLifecycleService.genereteNewQueue(this._currentGameName.value);
+    this.setQueue();
+  }
+  setQueue() {
+    this.queuePlayers$.next(
+      this.gameLifecycleService.getQueuePlayers(this._currentGameName.value)
+    );
+  }
+
+  openConfigModal() {
+    const dialogRef = this.dialog.open(ConfigComponent);
   }
 }

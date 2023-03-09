@@ -28,6 +28,8 @@ import { RemovePlayerComponent } from './drink-game/modals/remove-player/remove-
 import { GlobalErrorHandlerInterceptor } from './shared/global-error-handler.interceptor';
 import { ButtonTableMainComponent } from './drink-game/components/button-table-main/button-table-main.component';
 import { QueueListComponent } from './drink-game/components/queue-list/queue-list.component';
+import { QueuePlayerItemComponent } from './drink-game/components/queue-player-item/queue-player-item.component';
+import { ConfigComponent } from './drink-game/modals/config/config.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { QueueListComponent } from './drink-game/components/queue-list/queue-lis
     RemovePlayerComponent,
     ButtonTableMainComponent,
     QueueListComponent,
+    QueuePlayerItemComponent,
+    ConfigComponent,
   ],
   imports: [
     BrowserModule,

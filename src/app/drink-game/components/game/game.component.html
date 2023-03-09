@@ -15,6 +15,15 @@
             <mat-icon>remove_circle_outline</mat-icon>
             <span>usuń</span>
           </button>
+          <button mat-menu-item
+                  (click)="handleGenereteNewQueue()">
+            <mat-icon>cached</mat-icon>
+            <span>kolejki</span>
+          </button>
+          <button mat-menu-item (click)="openConfigModal()">
+            <mat-icon>whatshot</mat-icon>
+            <span>konfig</span>
+          </button>
           <button mat-menu-item routerLink="../..">
             <mat-icon>keyboard_arrow_left</mat-icon>
             <span>Cofnij</span>
@@ -25,10 +34,10 @@
       <mat-divider></mat-divider>
       <div class="spacing"></div>
       <section class="bottom">
-        </section>
-        <section class="right">
-          <app-button-table-main></app-button-table-main>
-        </section>
+        <div class="left">
+          <app-queue-list [queuePlayers$]="queuePlayers$"></app-queue-list>
+        </div>
+      </section>
 
       <section class="fixed-bar">
         <div class="list">
@@ -47,8 +56,8 @@
 <ng-template #empty>
   <div class="bad-game-container">
     <h2>
-  Taka gra nie istnieje!
+      Taka gra nie istnieje!
     </h2>
-      <button routerLink="../.." mat-raised-button color="warn">wróć</button>
+    <button routerLink="../.." mat-raised-button color="warn">wróć</button>
   </div>
 </ng-template>

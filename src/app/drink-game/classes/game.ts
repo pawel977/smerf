@@ -1,8 +1,12 @@
 import { Player } from './player';
+import { QueuePlayer } from './queue-player';
 
 export class Game {
-  private gameName: string;
-  private membersOfGame: Player[] = [];
+  gameName: string;
+  membersOfGame: Player[] = [];
+  queuePlayers: QueuePlayer[] = [];
+  //@ts-ignore
+  config;
 
   constructor(name: string) {
     this.gameName = name;

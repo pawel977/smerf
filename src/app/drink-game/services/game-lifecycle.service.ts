@@ -3,6 +3,7 @@ import { LocalStoradgeService } from '../../shared/services/local-storadge.servi
 import { Game } from '../classes/game';
 import { Player } from '../classes/player';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { QueuePlayer } from '../classes/queue-player';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +48,10 @@ export class GameLifecycleService {
     return data.length > 0;
   }
 
-  public createAndAddToExistingGame(data: any, gameNameString: string): void {
+  public createAndAddToExistingGame(
+    data: Partial<Player>,
+    gameNameString: string
+  ): void {
     const res = this.getData();
 
     const player: Player = this.createNewPlayer(data);
@@ -145,5 +149,30 @@ export class GameLifecycleService {
 
     response[currentGameObjAndIndex.index].membersOfGame = data;
     this._localStoradgeService.saveData(this._key, JSON.stringify(response));
+  }
+
+  genereteNewQueue(gameName: string) {
+    const data = this.getData();
+    const currentGameObjAndIndex: { game: any; index: number } =
+      this.getCurrentGameObject(gameName);
+
+    const queuePlayers: QueuePlayer[] =
+      currentGameObjAndIndex.game.membersOfGame.map(
+        (item: Player) => new QueuePlayer(item)
+      );
+    queuePlayers.push(...queuePlayers);
+    queuePlayers.push(...queuePlayers);
+    data[currentGameObjAndIndex.index].queuePlayers = queuePlayers;
+    this._localStoradgeService.saveData(this._key, JSON.stringify(data));
+  }
+
+  getQueuePlayers(gameName: string) {
+    const currentGameObjAndIndex: { game: any; index: number } =
+      this.getCurrentGameObject(gameName);
+    return !!currentGameObjAndIndex.game?.queuePlayers
+      ? currentGameObjAndIndex.game.queuePlayers.map(
+          (item: any) => new QueuePlayer(item)
+        )
+      : [];
   }
 }

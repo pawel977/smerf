@@ -1,0 +1,10 @@
+<div class="header">
+<h3>Kolejka</h3> <button mat-raised-button color="warn">NEXT</button>
+</div>
+  <mat-divider></mat-divider>
+
+<div class="list">
+  <ng-container *ngFor="let player of queuePlayers$ | async">
+    <app-queue-player-item [player]="player"></app-queue-player-item>
+  </ng-container>
+</div>
