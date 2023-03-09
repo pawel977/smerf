@@ -82,6 +82,9 @@ export class GameLifecycleService {
     }
   }
 
+  public isAnyGameExisting() {
+    return this.getData().length > 0;
+  }
   public getCurrentGameObject(gameNameString: string): {
     game: Object;
     index: number;

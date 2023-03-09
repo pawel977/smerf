@@ -20,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AddPlayerComponent } from './drink-game/modals/add-player/add-player.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { ExistingGameListComponent } from './drink-game/components/existing-game-list/existing-game-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     GameComponent,
     PlayerCardComponent,
     AddPlayerComponent,
+    ExistingGameListComponent,
   ],
   imports: [
     BrowserModule,

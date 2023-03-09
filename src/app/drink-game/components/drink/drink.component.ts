@@ -3,6 +3,7 @@ import { InitGameByNameComponent } from '../../modals/init-game-by-name/init-gam
 import { MatDialog } from '@angular/material/dialog';
 import { GameLifecycleService } from '../../services/game-lifecycle.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExistingGameListComponent } from '../existing-game-list/existing-game-list.component';
 
 @Component({
   selector: 'app-drink',
@@ -26,6 +27,25 @@ export class DrinkComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.gameLifecycleService.createGameByTitleAndSetToLs(result);
+        this.router.navigate([`game/${result}`], { relativeTo: this.route });
+      }
+    });
+  }
+
+  gamesExisting() {
+    return this.gameLifecycleService.isAnyGameExisting();
+  }
+
+  openExistingGameList() {
+    const dialogRef = this.dialog.open(ExistingGameListComponent, {
+      width: '500 px',
+      data: this.gameLifecycleService
+        .getData()
+        .map((item: any) => item.gameName),
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
         this.router.navigate([`game/${result}`], { relativeTo: this.route });
       }
     });
