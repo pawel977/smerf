@@ -46,6 +46,10 @@ export class GameComponent implements OnInit {
     );
   }
 
+  public getCurrentGameName(): BehaviorSubject<string> {
+    return this._currentGameName;
+  }
+
   public isGameExistingWithThisName(): boolean {
     return this.gameLifecycleService.isCurrentGameExist(
       this._currentGameName.value

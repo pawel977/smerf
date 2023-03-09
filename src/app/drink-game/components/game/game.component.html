@@ -2,7 +2,7 @@
   <ng-container *ngIf="isGameExistingWithThisName(); else empty">
     <div class="table">
       <section class="top">
-        <h3>Kto nalewa?</h3>
+        <h3>{{getCurrentGameName() | async}}</h3>
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
@@ -15,6 +15,7 @@
 
       </section>
       <mat-divider></mat-divider>
+      <div class="spacing"></div>
       <section class="bottom">
         <div class="list">
           <ng-container *ngFor="let player of players$ | async; let i = index">

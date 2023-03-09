@@ -14,12 +14,25 @@ export class Player {
   incrementWypiteKieliszki(number: number = 1) {
     this.wypiteKieliszki += number;
   }
+
+  getWypiteKieliszki(): number {
+    return this.polaneKieliszki;
+  }
+
   incrementPolaneKieliszki(number: number = 1) {
     this.polaneKieliszki += number;
   }
 
+  getPolaneKieliszki(): number {
+    return this.polaneKieliszki;
+  }
+
   inctementOminieteKolejki(number: number = 1) {
     this.ominieteKolejki += number;
+  }
+
+  getOminieteKieliszki(): number {
+    return this.ominieteKolejki;
   }
 
   setCzyWciazPije(isDrinking: boolean) {
