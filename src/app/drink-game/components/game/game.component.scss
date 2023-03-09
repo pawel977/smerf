@@ -28,3 +28,11 @@
     margin-bottom: 30px !important;
   }
 }
+
+.bad-game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: var(--seo-heihgt);
+}

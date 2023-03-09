@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InitGameByNameComponent } from '../../modals/init-game-by-name/init-game-by-name.component';
 import { AddPlayerComponent } from '../../modals/add-player/add-player.component';
 import { GameLifecycleService } from '../../services/game-lifecycle.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-game',
@@ -22,7 +23,8 @@ export class GameComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private dialog: MatDialog,
-    private gameLifecycleService: GameLifecycleService
+    private gameLifecycleService: GameLifecycleService,
+    private _snackBar: MatSnackBar
   ) {}
 
   public ngOnInit(): void {
@@ -31,10 +33,22 @@ export class GameComponent implements OnInit {
   }
 
   public setPlayers(): void {
+    if (!this.isGameExistingWithThisName()) {
+      this._snackBar.open('Podana gra nie istnieje', 'zamknij', {
+        duration: 3000,
+      });
+      return;
+    }
     this.players$.next(
       this.gameLifecycleService.getUsersForCurrentGame(
         this._currentGameName.value
       )
+    );
+  }
+
+  public isGameExistingWithThisName(): boolean {
+    return this.gameLifecycleService.isCurrentGameExist(
+      this._currentGameName.value
     );
   }
   public addPlayerOpenModal() {
@@ -44,8 +58,11 @@ export class GameComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
+      if (!result && result?.nick == undefined) {
+        return;
+      }
       this.gameLifecycleService.createAndAddToExistingGame(
-        { nick: result?.nick, imgUrl: result?.imgUrl },
+        { nick: result.nick, imgUrl: result?.imgUrl },
         this._currentGameName.value
       );
       this.setPlayers();

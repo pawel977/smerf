@@ -1,25 +1,38 @@
 <app-seo>
-  <div class="table">
-    <section class="top">
-    <h3>Kto nalewa?</h3>
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="addPlayerOpenModal()">
-          <mat-icon>face</mat-icon>
-          <span>Dodaj</span>
+  <ng-container *ngIf="isGameExistingWithThisName(); else empty">
+    <div class="table">
+      <section class="top">
+        <h3>Kto nalewa?</h3>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
         </button>
-      </mat-menu>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="addPlayerOpenModal()">
+            <mat-icon>face</mat-icon>
+            <span>Dodaj</span>
+          </button>
+        </mat-menu>
 
-    </section>
-    <mat-divider></mat-divider>
-    <section class="bottom">
-      <div class="list">
-        <ng-container *ngFor="let player of players$ | async; let i = index">
-          <app-player-card [playerData]="player" (emitModifyUser)="handleEmitModifyUser($event, i)" class="list-item"></app-player-card>
-        </ng-container>
-      </div>
-    </section>
-  </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section class="bottom">
+        <div class="list">
+          <ng-container *ngFor="let player of players$ | async; let i = index">
+            <app-player-card [playerData]="player" (emitModifyUser)="handleEmitModifyUser($event, i)"
+                             class="list-item"></app-player-card>
+          </ng-container>
+        </div>
+      </section>
+    </div>
+  </ng-container>
 </app-seo>
+
+
+<ng-template #empty>
+  <div class="bad-game-container">
+    <h2>
+  Taka gra nie istnieje!
+    </h2>
+      <button routerLink="../.." mat-raised-button color="warn">wróć</button>
+  </div>
+</ng-template>

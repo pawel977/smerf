@@ -116,6 +116,13 @@ export class GameLifecycleService {
     return players;
   }
 
+  isCurrentGameExist(gameName: any): boolean {
+    const data = this.getData();
+    return (
+      data.findIndex((gameObj: any) => gameObj.gameName === gameName) !== -1
+    );
+  }
+
   modifyUser(event: Player, i: number, gameName: string) {
     const currentGameObjAndIndex: { game: any; index: number } =
       this.getCurrentGameObject(gameName);
