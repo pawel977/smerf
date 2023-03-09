@@ -1,0 +1,8 @@
+.sidenav {
+  padding: 20px;
+  min-width: 350px;
+}
+
+::ng-deep .mat-sidenav-container {
+  min-height: calc(100vh - 67px) !important;
+}

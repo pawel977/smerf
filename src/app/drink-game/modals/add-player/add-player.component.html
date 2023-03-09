@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Dodaj Zawodnika</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" class="form">
+      <mat-form-field class="form-field">
+        <mat-label>Nazwa Gracza</mat-label>
+        <input matInput formControlName="nick" placeholder="Nazwa Gracza">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>wklej URL do zdjęcia</mat-label>
+        <input matInput formControlName="imgUrl" placeholder="URL">
+      </mat-form-field>
+    </form>
+
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button [disabled]="form?.get('nick')?.invalid" mat-raised-button color="primary" (click)="submit()">Tak</button>
+    <button mat-raised-button color="warn" (click)="abort()">Anuluj</button>
+  </mat-card-actions>
+</mat-card>

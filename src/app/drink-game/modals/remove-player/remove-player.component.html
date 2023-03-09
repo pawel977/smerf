@@ -1,0 +1,38 @@
+<ng-container [ngSwitch]="removeSteps$ | async">
+  <ng-container *ngSwitchCase="enumRemoveSteps.CHOSE_PLAYER_RO_REMOVE">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Kogo chcesz usunąć?</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-selection-list #users [multiple]="false">
+          <h3></h3>
+          <mat-list-option *ngFor="let player of data; let i = index"
+                           color="warn"
+                           (click)="next(player, i)">
+            {{player.getNick()}}
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button (click)="abort()" color="warn">Anuluj</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="enumRemoveSteps.ACCEPT_VIEW">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Potwierdzenie usuwania</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <div>czy jesteś pewien że chcesz usunąć: <span class="bold">{{chosenPlayer.nick}}</span>?</div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button (click)="abort()">nie</button>
+        <button mat-raised-button color="warn" (click)="sendReplaceData()">Tak</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</ng-container>
+

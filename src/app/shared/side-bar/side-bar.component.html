@@ -1,0 +1,21 @@
+<mat-drawer-container class="mat-sidenav-container" autosize>
+  <mat-drawer #drawer class="sidenav font-center" mode="over">
+    <h2>MENU</h2>
+    <mat-divider></mat-divider>
+
+    <mat-nav-list>
+      <ng-container *ngFor="let item of categoryList, let last = last">
+        <a mat-list-item routerLink="{{item.link}}">
+          <span matLine> {{item.title | uppercase}}</span>
+        </a>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </ng-container>
+    </mat-nav-list>
+
+  </mat-drawer>
+
+  <div>
+    <ng-content></ng-content>
+  </div>
+
+</mat-drawer-container>

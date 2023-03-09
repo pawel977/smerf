@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 67px);
+  flex-grow: 1;
+}
+
+.top-container {
+  height: 45%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.button-container {
+  display: flex;
+  width: 150px;
+  justify-content: space-between;
+}
+
+
+.bottom-container {
+
+}
+
+.init-game-by-name-dialog-container{
+  padding: 1px;
+}
