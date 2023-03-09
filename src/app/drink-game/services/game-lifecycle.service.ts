@@ -129,7 +129,6 @@ export class GameLifecycleService {
   modifyUser(event: Player, i: number, gameName: string) {
     const currentGameObjAndIndex: { game: any; index: number } =
       this.getCurrentGameObject(gameName);
-    console.log({ currentGameObjAndIndex });
     const players: Player[] = currentGameObjAndIndex.game.membersOfGame;
     const data = this.getData();
 
