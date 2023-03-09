@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Player } from '../../classes/player';
 
 @Component({
@@ -18,11 +11,18 @@ export class PlayerCardComponent {
   playerData: Player | undefined;
   @Output()
   emitModifyUser: EventEmitter<Player> = new EventEmitter<Player>();
+  @Output()
+  emitOpenEmitWholePlayerModal: EventEmitter<Player> =
+    new EventEmitter<Player>();
   constructor() {}
 
   onChangeIsDrinkingActive(event: any, playerData: Player): void {
     const valueCheckbox = event.checked;
     playerData.setCzyWciazPije(valueCheckbox);
     this.emitModifyUser.emit(playerData);
+  }
+
+  editPlayer() {
+    this.emitOpenEmitWholePlayerModal.emit();
   }
 }

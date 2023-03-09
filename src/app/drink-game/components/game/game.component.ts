@@ -7,6 +7,8 @@ import { InitGameByNameComponent } from '../../modals/init-game-by-name/init-gam
 import { AddPlayerComponent } from '../../modals/add-player/add-player.component';
 import { GameLifecycleService } from '../../services/game-lifecycle.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditPlayerComponent } from '../../modals/edit-player/edit-player.component';
+import { RemovePlayerComponent } from '../../modals/remove-player/remove-player.component';
 
 @Component({
   selector: 'app-game',
@@ -30,6 +32,8 @@ export class GameComponent implements OnInit {
   public ngOnInit(): void {
     this._setGameNameOnInit();
     this.setPlayers();
+
+    this.removePlayerOnModal();
   }
 
   public setPlayers(): void {
@@ -79,7 +83,31 @@ export class GameComponent implements OnInit {
   }
 
   handleEmitModifyUser(event: Player, i: number) {
-    console.log({ event, i });
     this.gameLifecycleService.modifyUser(event, i, this._currentGameName.value);
+  }
+
+  handleOpenEditPlayerModal(i: number) {
+    const dialogRef = this.dialog.open(EditPlayerComponent, {
+      width: '500px',
+      data: this.players$.value[i],
+    });
+
+    dialogRef.afterClosed().subscribe((data: Player) => {
+      if (data) {
+        this.gameLifecycleService.modifyUser(
+          data,
+          i,
+          this._currentGameName.value
+        );
+        this.setPlayers();
+      }
+    });
+  }
+
+  removePlayerOnModal() {
+    const dialogRef = this.dialog.open(RemovePlayerComponent, {
+      width: '500px',
+      data: this.players$.value,
+    });
   }
 }

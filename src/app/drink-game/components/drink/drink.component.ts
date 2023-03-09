@@ -3,7 +3,7 @@ import { InitGameByNameComponent } from '../../modals/init-game-by-name/init-gam
 import { MatDialog } from '@angular/material/dialog';
 import { GameLifecycleService } from '../../services/game-lifecycle.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExistingGameListComponent } from '../existing-game-list/existing-game-list.component';
+import { ExistingGameListComponent } from '../../modals/existing-game-list/existing-game-list.component';
 
 @Component({
   selector: 'app-drink',

@@ -16,7 +16,7 @@ export class Player {
   }
 
   getWypiteKieliszki(): number {
-    return this.polaneKieliszki;
+    return this.wypiteKieliszki;
   }
 
   incrementPolaneKieliszki(number: number = 1) {

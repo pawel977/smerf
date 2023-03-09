@@ -1,0 +1,41 @@
+<mat-card class="example-card" *ngIf="data">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image">
+      <img [src]="data?.getImg()">
+    </div>
+    <mat-card-title>{{data?.nick}}</mat-card-title>
+    <mat-card-subtitle>Edycja zawodnika</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image class="img" [src]="form.get('imgUrl')?.value">
+  <mat-card-content>
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <form [formGroup]="form">
+        <mat-grid-tile>
+          <mat-form-field class="form-field">
+            <mat-label>Nazwa Gracza</mat-label>
+            <input matInput formControlName="nick" placeholder="Nazwa Gracza">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="form-field">
+            <mat-label>Wypite kieliszki</mat-label>
+            <input matInput type="number" formControlName="wypiteKieliszki" placeholder="Wypite kieliszki">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="form-field">
+            <mat-label>Polane Kieliszki</mat-label>
+            <input matInput type="number" formControlName="polaneKieliszki" placeholder="Polane Kieliszki">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-button (click)="openEditImgModal()">Edytuj link do zdjęcia</button>
+        </mat-grid-tile>
+      </form>
+    </mat-grid-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="closeModal()">Anuluj</button>
+    <button mat-button [disabled]="!form.valid || !form.touched" (click)="closeAfterEditModal()">OK</button>
+  </mat-card-actions>
+</mat-card>

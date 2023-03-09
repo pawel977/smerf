@@ -1,0 +1,12 @@
+.example-header-image img {
+  background-size: cover;
+  height: inherit;
+  width: inherit;
+}
+
+mat-card img.img {
+  height: 300px;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain
+}

@@ -11,7 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { InitGameByNameComponent } from './drink-game/modals/init-game-by-name/init-game-by-name.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { GameComponent } from './drink-game/components/game/game.component';
 import { PlayerCardComponent } from './drink-game/components/player-card/player-card.component';
@@ -20,7 +20,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AddPlayerComponent } from './drink-game/modals/add-player/add-player.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { ExistingGameListComponent } from './drink-game/components/existing-game-list/existing-game-list.component';
+import { ExistingGameListComponent } from './drink-game/modals/existing-game-list/existing-game-list.component';
+import { EditPlayerComponent } from './drink-game/modals/edit-player/edit-player.component';
+import { EditImageLinkComponent } from './drink-game/modals/edit-image-link/edit-image-link.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RemovePlayerComponent } from './drink-game/modals/remove-player/remove-player.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,9 @@ import { ExistingGameListComponent } from './drink-game/components/existing-game
     PlayerCardComponent,
     AddPlayerComponent,
     ExistingGameListComponent,
+    EditPlayerComponent,
+    EditImageLinkComponent,
+    RemovePlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +54,8 @@ import { ExistingGameListComponent } from './drink-game/components/existing-game
     MatMenuModule,
     MatSlideToggleModule,
     MatGridListModule,
+    FormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

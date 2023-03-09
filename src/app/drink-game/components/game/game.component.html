@@ -11,6 +11,10 @@
             <mat-icon>face</mat-icon>
             <span>Dodaj</span>
           </button>
+          <button mat-menu-item (click)="removePlayerOnModal()">
+            <mat-icon>remove_circle_outline</mat-icon>
+            <span>usuń</span>
+          </button>
         </mat-menu>
 
       </section>
@@ -20,6 +24,7 @@
         <div class="list">
           <ng-container *ngFor="let player of players$ | async; let i = index">
             <app-player-card [playerData]="player" (emitModifyUser)="handleEmitModifyUser($event, i)"
+                             (emitOpenEmitWholePlayerModal)="handleOpenEditPlayerModal(i)"
                              class="list-item"></app-player-card>
           </ng-container>
         </div>

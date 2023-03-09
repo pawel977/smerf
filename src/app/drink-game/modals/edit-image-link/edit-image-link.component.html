@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Zmień zdjęcie</h1>
+<div mat-dialog-content>
+  <p>Jak chcesz wygladać?</p>
+  <mat-form-field appearance="fill" class="form-field">
+    <mat-label>url</mat-label>
+    <input matInput [(ngModel)]="data">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onAbortClick()" mat-raised-button color="warn">Anuluj</button>
+  <button mat-raised-button [disabled]="data.length < 1" color="primary" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

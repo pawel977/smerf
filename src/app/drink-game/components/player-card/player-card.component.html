@@ -3,8 +3,13 @@
     <div mat-card-avatar class="example-header-image">
       <img [src]="playerData?.getImg()">
     </div>
-    <mat-card-title>{{playerData?.getNick()}}</mat-card-title>
-    <mat-card-subtitle>pijący: <mat-slide-toggle color="primary" [checked]="playerData?.getCzyWciazPije()" (change)="onChangeIsDrinkingActive($event, playerData)"></mat-slide-toggle></mat-card-subtitle>
+    <mat-card-title>
+      <div>{{playerData?.getNick()}}</div>
+    </mat-card-title>
+    <mat-card-subtitle>pijący:
+      <mat-slide-toggle color="primary" [checked]="playerData?.getCzyWciazPije()"
+                        (change)="onChangeIsDrinkingActive($event, playerData)"></mat-slide-toggle>
+    </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <mat-grid-list cols="2" rowHeight="6:1">
@@ -13,8 +18,12 @@
       </mat-grid-tile>
       <mat-grid-tile><span>Wypite Kieliszki: {{playerData.getWypiteKieliszki()}}</span></mat-grid-tile>
       <mat-grid-tile><span>Ominięte Kolejki: {{playerData.getOminieteKieliszki()}}</span>
-        </mat-grid-tile>
-      <mat-grid-tile></mat-grid-tile>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-icon-button (click)="editPlayer()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
