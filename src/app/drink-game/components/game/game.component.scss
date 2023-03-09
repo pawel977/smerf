@@ -17,12 +17,35 @@
 }
 
 .bottom {
+  display: flex;
   min-height: 200px;
 }
 
+
+.fixed-bar {
+  display: inline-block;
+  white-space: nowrap;
+}
 .list {
-  min-width: 300px;
-  max-width: 400px;
+  display: inline-flex;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  min-width: 400px;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow-x: auto;
+
+
+  &-item {
+    width: 300px;
+    height: 200px;
+  }
+}
+
+
+.right {
+  margin: 0 auto;
 }
 
 .bad-game-container {

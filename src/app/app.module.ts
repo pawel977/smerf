@@ -26,6 +26,8 @@ import { EditImageLinkComponent } from './drink-game/modals/edit-image-link/edit
 import { MatDialogModule } from '@angular/material/dialog';
 import { RemovePlayerComponent } from './drink-game/modals/remove-player/remove-player.component';
 import { GlobalErrorHandlerInterceptor } from './shared/global-error-handler.interceptor';
+import { ButtonTableMainComponent } from './drink-game/components/button-table-main/button-table-main.component';
+import { QueueListComponent } from './drink-game/components/queue-list/queue-list.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { GlobalErrorHandlerInterceptor } from './shared/global-error-handler.int
     EditPlayerComponent,
     EditImageLinkComponent,
     RemovePlayerComponent,
+    ButtonTableMainComponent,
+    QueueListComponent,
   ],
   imports: [
     BrowserModule,

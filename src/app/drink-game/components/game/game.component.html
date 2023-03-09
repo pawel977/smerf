@@ -25,6 +25,12 @@
       <mat-divider></mat-divider>
       <div class="spacing"></div>
       <section class="bottom">
+        </section>
+        <section class="right">
+          <app-button-table-main></app-button-table-main>
+        </section>
+
+      <section class="fixed-bar">
         <div class="list">
           <ng-container *ngFor="let player of players$ | async; let i = index">
             <app-player-card [playerData]="player" (emitModifyUser)="handleEmitModifyUser($event, i)"
