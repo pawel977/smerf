@@ -32,8 +32,6 @@ export class GameComponent implements OnInit {
   public ngOnInit(): void {
     this._setGameNameOnInit();
     this.setPlayers();
-
-    this.removePlayerOnModal();
   }
 
   public setPlayers(): void {
@@ -108,6 +106,17 @@ export class GameComponent implements OnInit {
     const dialogRef = this.dialog.open(RemovePlayerComponent, {
       width: '500px',
       data: this.players$.value,
+    });
+
+    dialogRef.afterClosed().subscribe((data: Player[]) => {
+      if (!data) {
+        return;
+      }
+      this.gameLifecycleService.repleceMembersArray(
+        data,
+        this._currentGameName.value
+      );
+      this.setPlayers();
     });
   }
 }

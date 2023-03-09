@@ -129,6 +129,7 @@ export class GameLifecycleService {
   modifyUser(event: Player, i: number, gameName: string) {
     const currentGameObjAndIndex: { game: any; index: number } =
       this.getCurrentGameObject(gameName);
+    console.log({ currentGameObjAndIndex });
     const players: Player[] = currentGameObjAndIndex.game.membersOfGame;
     const data = this.getData();
 
@@ -136,5 +137,14 @@ export class GameLifecycleService {
     data[currentGameObjAndIndex.index].membersOfGame = players;
 
     this._localStoradgeService.saveData(this._key, JSON.stringify(data));
+  }
+
+  repleceMembersArray(data: Player[], gameName: string) {
+    const currentGameObjAndIndex: { game: any; index: number } =
+      this.getCurrentGameObject(gameName);
+    const response = this.getData();
+
+    response[currentGameObjAndIndex.index].membersOfGame = data;
+    this._localStoradgeService.saveData(this._key, JSON.stringify(response));
   }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,7 @@ import { EditPlayerComponent } from './drink-game/modals/edit-player/edit-player
 import { EditImageLinkComponent } from './drink-game/modals/edit-image-link/edit-image-link.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RemovePlayerComponent } from './drink-game/modals/remove-player/remove-player.component';
+import { GlobalErrorHandlerInterceptor } from './shared/global-error-handler.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,12 @@ import { RemovePlayerComponent } from './drink-game/modals/remove-player/remove-
     FormsModule,
     MatDialogModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandlerInterceptor,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
