@@ -15,8 +15,8 @@ export class GlobalErrorHandlerInterceptor implements ErrorHandler {
 
   handleError(error: any) {
     // Check if it's an error from an HTTP response
-    if (!(error instanceof HttpErrorResponse)) {
-      error = error.rejection; // get the error object
+    if (true) {
+      console.error({ error });
     }
     this.zone.run(() =>
       this._snackBar.open(

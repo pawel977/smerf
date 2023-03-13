@@ -14,31 +14,35 @@ export class GameLifecycleService {
     private _localStoradgeService: LocalStoradgeService,
     private _snackBar: MatSnackBar
   ) {}
-  public getData() {
+  public getData(): Game[] {
     const data = this._localStoradgeService.getData(this._key);
     if (!data || data?.length < 1) {
       return [];
     }
-    return JSON.parse(data);
+    const res = JSON.parse(data);
+    return res.map((item: any) => {
+      console.log({ xd: new Game(item) });
+      return new Game(item);
+    });
   }
   public createGameByTitleAndSetToLs(gameName: string): void {
-    const data = this.getData();
+    const data: Game[] = this.getData();
     // @ts-ignore
     if (this.validateIsExistingAnyGame()) {
       this.validateWhenDataIsExistingGame(data, gameName);
     } else {
-      const res: string = JSON.stringify([new Game(gameName)]);
+      const res: string = JSON.stringify([new Game({ gameName })]);
       this._localStoradgeService.saveData(this._key, res);
     }
   }
 
-  private validateWhenDataIsExistingGame(data: any[], name: string) {
-    const index = data.findIndex((e: any) => e.gameName === name);
+  private validateWhenDataIsExistingGame(data: Game[], gameName: string) {
+    const index: number = data.findIndex((e: any) => e.gameName === gameName);
     const res = data;
     if (index !== -1) {
-      res[index] = new Game(name);
+      res[index] = new Game({ gameName });
     } else {
-      res.push(new Game(name));
+      res.push(new Game({ gameName }));
     }
     const jsonRes = JSON.stringify(res);
     this._localStoradgeService.saveData(this._key, jsonRes);
@@ -123,10 +127,16 @@ export class GameLifecycleService {
     return players;
   }
 
-  isCurrentGameExist(gameName: any): boolean {
-    const data = this.getData();
+  isCurrentGameExist(gameName: string): boolean {
+    const data: Game[] = this.getData();
+    console.log({
+      data,
+      gameName,
+      xd:
+        data.findIndex((gameObj: Game) => gameObj.gameName === gameName) !== -1,
+    });
     return (
-      data.findIndex((gameObj: any) => gameObj.gameName === gameName) !== -1
+      data.findIndex((gameObj: Game) => gameObj.gameName === gameName) !== -1
     );
   }
 

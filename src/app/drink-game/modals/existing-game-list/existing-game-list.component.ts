@@ -11,7 +11,9 @@ export class ExistingGameListComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: string[]
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log({ data: this.data });
+  }
 
   onclick(item: string) {
     this.dialogRef.close(item);

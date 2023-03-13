@@ -30,6 +30,7 @@ import { ButtonTableMainComponent } from './drink-game/components/button-table-m
 import { QueueListComponent } from './drink-game/components/queue-list/queue-list.component';
 import { QueuePlayerItemComponent } from './drink-game/components/queue-player-item/queue-player-item.component';
 import { ConfigComponent } from './drink-game/modals/config/config.component';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ConfigComponent } from './drink-game/modals/config/config.component';
     MatGridListModule,
     FormsModule,
     MatDialogModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [
     {
