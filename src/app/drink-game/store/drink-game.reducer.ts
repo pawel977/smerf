@@ -31,6 +31,11 @@ export function drinkGameReducer(
         ...state,
         gamesList: action.payload.games,
       };
+    case DrinkGameActions.DrinkGameActions.CrateNewGameOnSuccess:
+      return {
+        ...state,
+        gamesList: action.payload.games,
+      };
     default: {
       return state;
     }

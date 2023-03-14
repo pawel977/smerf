@@ -11,7 +11,11 @@ import {
   selectGamesList,
   selectGamesListNames,
 } from '../../store/selectors';
-import { LoadDataFromLs } from '../../store/drink-game.actions';
+import {
+  CrateNewGame,
+  DrinkGameActions,
+  LoadDataFromLs,
+} from '../../store/drink-game.actions';
 import { first, map } from 'rxjs';
 import { Game } from '../../classes/game';
 
@@ -29,7 +33,7 @@ export class DrinkComponent implements OnInit {
     private _store: Store
   ) {}
   ngOnInit(): void {
-    this._store.dispatch(new LoadDataFromLs());
+    this._store.dispatch({ type: DrinkGameActions.LoadDataFromLs });
   }
 
   public createNewGame() {
@@ -37,12 +41,12 @@ export class DrinkComponent implements OnInit {
       width: '500px',
     });
 
-    dialogRef.afterClosed().subscribe((result: string) => {
-      if (result) {
-        this.gameLifecycleService.createGameByTitleAndSetToLs(
-          result,
-          `we-polej/game/${result}`
-        );
+    dialogRef.afterClosed().subscribe((gameName: string) => {
+      if (gameName) {
+        this._store.dispatch({
+          type: DrinkGameActions.CrateNewGame,
+          payload: { gameName },
+        });
       }
     });
   }

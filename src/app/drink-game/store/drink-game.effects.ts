@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { GameLifecycleService } from '../services/game-lifecycle.service';
-import { ClearCurrentGame, DrinkGameActions } from './drink-game.actions';
-import { map, mergeMap, tap } from 'rxjs';
+import { DrinkGameActions } from './drink-game.actions';
+import { map, tap, withLatestFrom } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { selectGamesList } from './selectors';
+import { Game } from '../classes/game';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class DrinkGameEffects {
@@ -18,8 +23,57 @@ export class DrinkGameEffects {
     })
   );
 
+  @Effect()
+  createNewGame$ = this._actions$.pipe(
+    ofType(DrinkGameActions.CrateNewGame),
+    map(({ payload }: any) => payload.gameName),
+    // @ts-ignore
+    withLatestFrom(this._store.select(selectGamesList), (name, games) => ({
+      name,
+      games,
+    })),
+    // @ts-ignore
+    map(({ name, games }) => {
+      if (
+        games.findIndex((game: Partial<Game>) => game.gameName === name) !== -1
+      ) {
+        throw Error('Gra o tej nazwie już istnieje!');
+      }
+      const res = this._gameLifeCycleService.createNewGame(name, games);
+      this._router.navigate([`we-polej/game/${name}`]);
+      return res;
+    }),
+    tap(data =>
+      this._store.dispatch({
+        type: DrinkGameActions.CrateNewGameOnSuccess,
+        payload: { games: data },
+      })
+    ),
+    map(() => ({
+      type: DrinkGameActions.SetDataToLs,
+    }))
+  );
+
+  @Effect()
+  setDataToLsAndReload$ = this._actions$.pipe(
+    ofType(DrinkGameActions.SetDataToLs),
+    withLatestFrom(this._store.select(selectGamesList), (action, data) => ({
+      action,
+      data,
+    })),
+    tap(({ data }) => {
+      this._gameLifeCycleService.setDataToLs(data);
+    }),
+    map(() => ({
+      type: DrinkGameActions.LoadDataFromLs,
+    }))
+  );
+
   constructor(
     private _actions$: Actions,
-    private _gameLifeCycleService: GameLifecycleService
+    private _gameLifeCycleService: GameLifecycleService,
+    private _store: Store,
+    private _snackBar: MatSnackBar,
+    private _router: Router
   ) {}
 }
