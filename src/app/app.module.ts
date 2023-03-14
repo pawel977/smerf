@@ -31,7 +31,13 @@ import { QueueListComponent } from './drink-game/components/queue-list/queue-lis
 import { QueuePlayerItemComponent } from './drink-game/components/queue-player-item/queue-player-item.component';
 import { ConfigComponent } from './drink-game/modals/config/config.component';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { drinkGameReducer } from './drink-game/store/drink-game.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { DrinkGameEffects } from './drink-game/store/drink-game.effects';
 
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +72,13 @@ import { StoreModule } from '@ngrx/store';
     MatGridListModule,
     FormsModule,
     MatDialogModule,
-    StoreModule.forRoot({}, {}),
+    //@ts-ignore
+    StoreModule.forRoot({ drinkGame: drinkGameReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([DrinkGameEffects]),
   ],
   providers: [
     {

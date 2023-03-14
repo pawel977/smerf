@@ -4,6 +4,9 @@ import { Game } from '../classes/game';
 import { Player } from '../classes/player';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { QueuePlayer } from '../classes/queue-player';
+import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SetCurrentGame } from '../store/drink-game.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +15,10 @@ export class GameLifecycleService {
   private _key: string = 'DRINK_GAME_KEY';
   constructor(
     private _localStoradgeService: LocalStoradgeService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _store: Store,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
   public getData(): Game[] {
     const data = this._localStoradgeService.getData(this._key);
@@ -21,31 +27,39 @@ export class GameLifecycleService {
     }
     const res = JSON.parse(data);
     return res.map((item: any) => {
-      console.log({ xd: new Game(item) });
       return new Game(item);
     });
   }
-  public createGameByTitleAndSetToLs(gameName: string): void {
+  public createGameByTitleAndSetToLs(gameName: string, route: string): void {
     const data: Game[] = this.getData();
     // @ts-ignore
     if (this.validateIsExistingAnyGame()) {
-      this.validateWhenDataIsExistingGame(data, gameName);
+      this.validateWhenDataIsExistingGame(data, gameName, route);
     } else {
       const res: string = JSON.stringify([new Game({ gameName })]);
       this._localStoradgeService.saveData(this._key, res);
+      this.router.navigate([route], { relativeTo: this.route });
     }
   }
 
-  private validateWhenDataIsExistingGame(data: Game[], gameName: string) {
+  private validateWhenDataIsExistingGame(
+    data: Game[],
+    gameName: string,
+    route: string
+  ) {
     const index: number = data.findIndex((e: any) => e.gameName === gameName);
     const res = data;
     if (index !== -1) {
-      res[index] = new Game({ gameName });
+      this._snackBar.open('Gra o tej nazwie juz istnieje', 'OK', {
+        duration: 3000,
+      });
+      return;
     } else {
       res.push(new Game({ gameName }));
     }
     const jsonRes = JSON.stringify(res);
     this._localStoradgeService.saveData(this._key, jsonRes);
+    this.router.navigate([route], { relativeTo: this.route });
   }
   private validateIsExistingAnyGame(): boolean {
     const data = this.getData();
@@ -90,9 +104,6 @@ export class GameLifecycleService {
     }
   }
 
-  public isAnyGameExisting() {
-    return this.getData().length > 0;
-  }
   public getCurrentGameObject(gameNameString: string): {
     game: Object;
     index: number;

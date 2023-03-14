@@ -3,7 +3,7 @@
     <div class="top-container">
       <div class="button-container">
         <button mat-raised-button color="primary" (click)="createNewGame()">NEW</button>
-        <button mat-raised-button color="primary" *ngIf="gamesExisting()" (click)="openExistingGameList()">LOAD</button>
+        <button mat-raised-button color="primary" *ngIf="gamesExisting$() | async" (click)="openExistingGameList()">LOAD</button>
       </div>
     </div>
   </div>

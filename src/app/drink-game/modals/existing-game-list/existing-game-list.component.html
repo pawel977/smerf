@@ -1,8 +1,7 @@
 <mat-selection-list [multiple]="false">
-  <mat-list-option *ngFor="let item of data" >
-    <div class="lit-el" (click)="onclick(item)">
+  <ng-container *ngFor="let item of (getList$() | async)">
+  <mat-list-option class="lit-el" (click)="onclick(item)" >
       {{item}}
-    </div>
-
   </mat-list-option>
+  </ng-container>
 </mat-selection-list>

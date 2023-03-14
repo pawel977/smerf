@@ -8,7 +8,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./init-game-by-name.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class InitGameByNameComponent implements OnInit {
+export class InitGameByNameComponent {
   public gameName: FormControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(32),
@@ -17,8 +17,6 @@ export class InitGameByNameComponent implements OnInit {
     public dialogRef: MatDialogRef<string>,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {}
-
-  ngOnInit(): void {}
 
   public submit() {
     this.dialogRef.close(this.gameName.value);
