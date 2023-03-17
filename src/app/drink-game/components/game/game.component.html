@@ -1,8 +1,8 @@
 <app-seo>
-  <ng-container *ngIf="isGameExistingWithThisName(); else empty">
+  <ng-container *ngIf="isCurrentGameExist$ | async; else empty">
     <div class="table">
       <section class="top">
-        <h3>{{getCurrentGameName() | async}}</h3>
+        <h3>{{currentGameName$ | async}}</h3>
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>

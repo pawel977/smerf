@@ -36,6 +36,21 @@ export function drinkGameReducer(
         ...state,
         gamesList: action.payload.games,
       };
+    // case DrinkGameActions.DrinkGameActions.ModifyMemberSInState:
+    //   return {
+    //     ...state,
+    //     gamesList: state.gamesList.map<Game[]>(
+    //       (element: Game, index: number) => {
+    //         if (index !== action.payload.gameIndex) {
+    //           return element;
+    //         }
+    //         return {
+    //           ...element,
+    //           membersOfGame: action.payload.player,
+    //         };
+    //       }
+    //     ),
+    //   };
     default: {
       return state;
     }

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { GameLifecycleService } from '../services/game-lifecycle.service';
-import { DrinkGameActions } from './drink-game.actions';
+import { DrinkGameActions, ModifyMemberSInState } from './drink-game.actions';
 import { map, tap, withLatestFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { selectGamesList } from './selectors';
+import { selectGamesList, selectIndexOfGame, selectPlayers } from './selectors';
 import { Game } from '../classes/game';
 import { Router } from '@angular/router';
+import { Player } from '../classes/player';
 
 @Injectable()
 export class DrinkGameEffects {
@@ -67,6 +68,38 @@ export class DrinkGameEffects {
     map(() => ({
       type: DrinkGameActions.LoadDataFromLs,
     }))
+  );
+
+  @Effect()
+  createMember = this._actions$.pipe(
+    ofType(DrinkGameActions.CreateMember),
+    withLatestFrom(
+      this._store.select(selectPlayers),
+      this._store.select(selectIndexOfGame),
+      (action, players, gameIndex) => ({
+        action,
+        players,
+        gameIndex,
+      })
+    ),
+    map(({ action, players, gameIndex }: any) => {
+      const playerExist =
+        players.findIndex(
+          (player: Player) => player.nick === action.payload.nick
+        ) !== -1;
+      if (playerExist) {
+        throw Error('Gracz o tym imieniu już istnieje!');
+      }
+
+      const player = this._gameLifeCycleService.createNewPlayer(action.payload);
+      return { action, player, gameIndex };
+    }),
+    map(({ gameIndex, player }) => {
+      return {
+        type: DrinkGameActions.ModifyMemberSInState,
+        payload: { gameIndex, player },
+      };
+    })
   );
 
   constructor(

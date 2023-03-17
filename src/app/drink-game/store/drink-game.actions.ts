@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Game } from '../classes/game';
 import { DrinkGameState } from './drink-game.reducer';
+import { Player } from '../classes/player';
 
 const moduleName = '[Drink Game]';
 export enum DrinkGameActions {
@@ -11,6 +12,8 @@ export enum DrinkGameActions {
   CrateNewGame = `[Drink Game] CrateNewGame`,
   CrateNewGameOnSuccess = `[Drink Game] CrateNewGameOnSuccess`,
   SetDataToLs = `[Drink Game] SetDataToLs`,
+  CreateMember = `[Drink Game] CreateMember`,
+  ModifyMemberSInState = `[Drink Game] ModifyMemberSInState`,
 }
 
 export class SetCurrentGame implements Action {
@@ -39,6 +42,15 @@ export class SetDataToLs implements Action {
   readonly type = DrinkGameActions.SetDataToLs;
 }
 
+export class CreateMember implements Action {
+  readonly type = DrinkGameActions.CreateMember;
+  constructor(public payload: { nick: string; imgUrl: string }) {}
+}
+export class ModifyMemberSInState implements Action {
+  readonly type = DrinkGameActions.ModifyMemberSInState;
+  constructor(public payload: { gameIndex: number; player: any }) {}
+}
+
 export type DrinkGameUnion =
   | SetCurrentGame
   | ClearCurrentGame
@@ -46,4 +58,6 @@ export type DrinkGameUnion =
   | LoadDataFromLsOnSuccess
   | CrateNewGame
   | CrateNewGameOnSuccess
-  | SetDataToLs;
+  | SetDataToLs
+  | CreateMember
+  | ModifyMemberSInState;

@@ -31,44 +31,6 @@ export class GameLifecycleService {
     });
   }
 
-  public createAndAddToExistingGame(
-    data: Partial<Player>,
-    gameNameString: string
-  ): void {
-    const res = this.getData();
-
-    const player: Player = this.createNewPlayer(data);
-    const currentGameObj: any = this.getCurrentGameObject(gameNameString);
-    const existingPlayers: Player[] = currentGameObj.game.membersOfGame;
-    const indexIfExisting = existingPlayers.findIndex(
-      (e: any) => e.nick === player.getNick()
-    );
-
-    if (this.gameWithThisNameNotCreated(gameNameString)) {
-      const resFullData = res[currentGameObj.index];
-      resFullData.membersOfGame.push(player);
-      debugger;
-      this._localStoradgeService.saveData(
-        this._key,
-        JSON.stringify(resFullData)
-      );
-    }
-
-    if (indexIfExisting !== -1) {
-      this._snackBar.open('Gracz o tej nazwie juz istnieje', 'OK', {
-        duration: 3000,
-      });
-      return;
-    } else {
-      const resFullData = res[currentGameObj.index];
-      resFullData.membersOfGame.push(player);
-
-      const xd = res;
-      xd[currentGameObj.index] = resFullData;
-      this._localStoradgeService.saveData(this._key, JSON.stringify(xd));
-    }
-  }
-
   public getCurrentGameObject(gameNameString: string): {
     game: Object;
     index: number;
@@ -83,37 +45,10 @@ export class GameLifecycleService {
   public createNewPlayer(data: any): Player {
     const { nick, imgUrl } = data;
     const newPlayer = new Player({ nick, imgUrl });
-    if (imgUrl) {
+    if (imgUrl.length > 0) {
       newPlayer.setImg(imgUrl);
     }
     return newPlayer;
-  }
-
-  public gameWithThisNameNotCreated(name: string): boolean {
-    const data = this.getData();
-    return <boolean>(data.findIndex((e: any) => e.gameName === name) === -1);
-  }
-
-  getUsersForCurrentGame(currentGameName: string): Player[] {
-    const onbject: { game: any; index: number } =
-      this.getCurrentGameObject(currentGameName);
-    const players: Player[] = onbject.game.membersOfGame.map(
-      (data: any) => new Player(data)
-    );
-    return players;
-  }
-
-  isCurrentGameExist(gameName: string): boolean {
-    const data: Game[] = this.getData();
-    console.log({
-      data,
-      gameName,
-      xd:
-        data.findIndex((gameObj: Game) => gameObj.gameName === gameName) !== -1,
-    });
-    return (
-      data.findIndex((gameObj: Game) => gameObj.gameName === gameName) !== -1
-    );
   }
 
   modifyUser(event: Player, i: number, gameName: string) {
@@ -126,15 +61,6 @@ export class GameLifecycleService {
     data[currentGameObjAndIndex.index].membersOfGame = players;
 
     this._localStoradgeService.saveData(this._key, JSON.stringify(data));
-  }
-
-  repleceMembersArray(data: Player[], gameName: string) {
-    const currentGameObjAndIndex: { game: any; index: number } =
-      this.getCurrentGameObject(gameName);
-    const response = this.getData();
-
-    response[currentGameObjAndIndex.index].membersOfGame = data;
-    this._localStoradgeService.saveData(this._key, JSON.stringify(response));
   }
 
   genereteNewQueue(gameName: string) {
@@ -166,18 +92,6 @@ export class GameLifecycleService {
     const payload = gamesList.slice();
     payload.push(new Game({ gameName }));
     return payload;
-  }
-
-  private validateWhenDataIsExistingGame(
-    data: Game[],
-    gameName: string,
-    route: string
-  ) {
-    const res = data;
-
-    res.push(new Game({ gameName }));
-
-    this.router.navigate([route], { relativeTo: this.route });
   }
 
   setDataToLs(data: any) {

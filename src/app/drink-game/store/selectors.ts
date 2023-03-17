@@ -4,14 +4,55 @@ import { Game } from '../classes/game';
 
 export const selectDrinkGame = (state: any) => state.drinkGame;
 
-export const selectCurrentGame = createSelector(
-  selectDrinkGame,
-  (state: DrinkGameState) => state
-);
 export const selectGamesList = createSelector(
   selectDrinkGame,
   (state: DrinkGameState) => {
     return state?.gamesList;
+  }
+);
+
+export const selectCurrentGameName = createSelector(
+  selectDrinkGame,
+  state => state.currentGame
+);
+
+export const selectCurrentGame = createSelector(
+  selectCurrentGameName,
+  selectGamesList,
+  (gameName, gameList: Game[]) => {
+    if (gameName !== null) {
+      const index = gameList.findIndex(
+        (game: Game) => game.gameName === gameName
+      );
+      return gameList[index];
+    }
+    return null;
+  }
+);
+
+export const selectPlayers = createSelector(selectCurrentGame, state => {
+  if (state) {
+    return state?.membersOfGame;
+  }
+  return [];
+});
+
+export const selectIndexOfGame = createSelector(
+  selectCurrentGameName,
+  selectGamesList,
+  (name: any, membersList: any[]) => {
+    return membersList?.findIndex(game => game.gameName === name);
+  }
+);
+
+export const selectIsGameExist = createSelector(
+  selectCurrentGameName,
+  selectGamesList,
+  (gameName, gameList) => {
+    if (!gameName) {
+      return false;
+    }
+    return gameList?.findIndex(game => game.gameName === gameName) !== -1;
   }
 );
 
