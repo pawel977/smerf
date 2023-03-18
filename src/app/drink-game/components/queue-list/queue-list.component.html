@@ -1,5 +1,8 @@
-<div class="header">
-<h3>Kolejka</h3> <button mat-raised-button color="warn">NEXT</button>
+<ng-container *ngIf="(isListAvailavle$() | async)">
+<div class="header" >
+<h3>Kolejka</h3>
+  <button *ngIf="(isListAvailavle$() | async)" mat-raised-button color="warn" (click)="nextShot()">NEXT</button>
+<!--  <button *ngIf="(isListAvailavle$() | async) === false" mat-raised-button color="warn">GENERUJ</button>-->
 </div>
   <mat-divider></mat-divider>
 
@@ -8,3 +11,4 @@
     <app-queue-player-item [player]="player"></app-queue-player-item>
   </ng-container>
 </div>
+</ng-container>

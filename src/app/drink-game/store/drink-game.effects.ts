@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { GameLifecycleService } from '../services/game-lifecycle.service';
-import { DrinkGameActions, ModifyMemberSInState } from './drink-game.actions';
+import {
+  DrinkGameActions,
+  ModifyMemberSInState,
+  StartNextShot,
+} from './drink-game.actions';
 import { map, tap, withLatestFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { selectGamesList, selectIndexOfGame, selectPlayers } from './selectors';
+import {
+  selectGamesList,
+  selectIndexOfGame,
+  selectPlayers,
+  selectQueuePlayers,
+} from './selectors';
 import { Game } from '../classes/game';
 import { Router } from '@angular/router';
 import { Player } from '../classes/player';
@@ -126,6 +135,30 @@ export class DrinkGameEffects {
   @Effect()
   generateNewQueueSuccess$ = this._actions$.pipe(
     ofType(DrinkGameActions.AddToStoreNewQueue),
+    map(({}) => ({ type: DrinkGameActions.SetDataToLs }))
+  );
+
+  @Effect()
+  StartNextShot$ = this._actions$.pipe(
+    ofType(DrinkGameActions.StartNextShot),
+    withLatestFrom(
+      this._store.select(selectQueuePlayers),
+      this._store.select(selectIndexOfGame),
+      (action, queuePlayers, gameIndex) => ({ action, queuePlayers, gameIndex })
+    ),
+    map(({ action, queuePlayers, gameIndex }) => {
+      const mappedQueue =
+        this._gameLifeCycleService.getSplitetdQueueByFirst(queuePlayers);
+      return {
+        type: DrinkGameActions.StartNextShotSuccess,
+        payload: { gameIndex, queuePlayers: mappedQueue },
+      };
+    })
+  );
+
+  @Effect()
+  StartNextShotSuccess$ = this._actions$.pipe(
+    ofType(DrinkGameActions.StartNextShotSuccess),
     map(({}) => ({ type: DrinkGameActions.SetDataToLs }))
   );
 

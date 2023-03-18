@@ -31,39 +31,12 @@ export class GameLifecycleService {
     res.forEach((item: any) => {
       gamesArray.push(new Game(item));
     });
-    //
-
-    console.log({ gamesArray });
 
     return gamesArray;
   }
 
-  public getCurrentGameObject(gameNameString: string): {
-    game: Object;
-    index: number;
-  } {
-    const data = this.getData();
-    const index = data.findIndex(
-      (item: any) => item.gameName === gameNameString
-    );
-    return { game: <Object>data[index], index };
-  }
-
   public createNewPlayer(data: Partial<Player>): Player {
-    console.log({ data });
     return new Player(data);
-  }
-
-  modifyUser(event: Player, i: number, gameName: string) {
-    const currentGameObjAndIndex: { game: any; index: number } =
-      this.getCurrentGameObject(gameName);
-    const players: Player[] = currentGameObjAndIndex.game.membersOfGame;
-    const data = this.getData();
-
-    players[i] = event;
-    data[currentGameObjAndIndex.index].membersOfGame = players;
-
-    this._localStoradgeService.saveData(this._key, JSON.stringify(data));
   }
 
   genereteNewQueue(players: Player[] = []): QueuePlayer[] {
@@ -77,14 +50,13 @@ export class GameLifecycleService {
     return arrayOfQueuePlayers;
   }
 
-  getQueuePlayers(gameName: string) {
-    const currentGameObjAndIndex: { game: any; index: number } =
-      this.getCurrentGameObject(gameName);
-    return !!currentGameObjAndIndex.game?.queuePlayers
-      ? currentGameObjAndIndex.game.queuePlayers.map(
-          (item: any) => new QueuePlayer(item)
-        )
-      : [];
+  getSplitetdQueueByFirst(queue: QueuePlayer[] = []): QueuePlayer[] {
+    if (queue.length < 1) {
+      return [];
+    }
+    const copyTab = queue.slice();
+    copyTab.splice(0, 1);
+    return copyTab;
   }
 
   createNewGame(gameName: string, gamesList: Game[]): Game[] {

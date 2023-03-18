@@ -17,6 +17,8 @@ export enum DrinkGameActions {
   ModifyMemberSInState = `[Drink Game] ModifyMemberSInState`,
   GenereteNewQueue = `[Drink Game] GenereteNewQueue`,
   AddToStoreNewQueue = `[Drink Game] AddToStoreNewQueue`,
+  StartNextShot = `[Drink Game] StartNextShot`,
+  StartNextShotSuccess = `[Drink Game] StartNextShotSuccess`,
 }
 
 export class SetCurrentGame implements Action {
@@ -64,6 +66,16 @@ export class AddToStoreNewQueue implements Action {
     public payload: { gameIndex: number; queuePlayers: QueuePlayer[] }
   ) {}
 }
+export class StartNextShot implements Action {
+  readonly type = DrinkGameActions.StartNextShot;
+}
+
+export class StartNextShotSuccess implements Action {
+  readonly type = DrinkGameActions.StartNextShotSuccess;
+  constructor(
+    public payload: { gameIndex: number; queuePlayers: QueuePlayer[] }
+  ) {}
+}
 export type DrinkGameUnion =
   | SetCurrentGame
   | ClearCurrentGame
@@ -75,4 +87,6 @@ export type DrinkGameUnion =
   | CreateMember
   | ModifyMemberSInState
   | GenereteNewQueue
-  | AddToStoreNewQueue;
+  | AddToStoreNewQueue
+  | StartNextShot
+  | StartNextShotSuccess;

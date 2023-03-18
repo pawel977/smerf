@@ -39,7 +39,6 @@ export class Player {
   }
 
   setCzyWciazPije(isDrinking: boolean) {
-    console.log({ czyp: this.czyWciazPije, isDrinking });
     this.czyWciazPije = isDrinking;
   }
 

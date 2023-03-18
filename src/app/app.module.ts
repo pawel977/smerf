@@ -36,6 +36,7 @@ import { environment } from '../environments/environment';
 import { drinkGameReducer } from './drink-game/store/drink-game.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { DrinkGameEffects } from './drink-game/store/drink-game.effects';
+import { NextShotComponent } from './drink-game/modals/next-shot/next-shot.component';
 
 // @ts-ignore
 @NgModule({
@@ -55,6 +56,7 @@ import { DrinkGameEffects } from './drink-game/store/drink-game.effects';
     QueueListComponent,
     QueuePlayerItemComponent,
     ConfigComponent,
+    NextShotComponent,
   ],
   imports: [
     BrowserModule,
