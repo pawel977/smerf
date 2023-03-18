@@ -61,6 +61,20 @@ export function drinkGameReducer(
           return mappedGame;
         }),
       };
+    case DrinkGameActions.DrinkGameActions.AddToStoreNewQueue:
+      return {
+        ...state,
+        gamesList: state.gamesList.map<Game>((element: Game, index: number) => {
+          if (index !== action.payload.gameIndex) {
+            return element;
+          }
+          let mappedObj: Game = Object.assign({}, element);
+
+          mappedObj.queuePlayers = action.payload.queuePlayers;
+
+          return mappedObj;
+        }),
+      };
     default: {
       return state;
     }

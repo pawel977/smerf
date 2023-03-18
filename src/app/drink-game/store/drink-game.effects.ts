@@ -83,7 +83,6 @@ export class DrinkGameEffects {
       })
     ),
     map(({ action, players, gameIndex }: any) => {
-      console.log({ action, players, gameIndex });
       const playerExist =
         players.findIndex(
           (player: Player) => player.nick === action.payload.data.nick
@@ -104,6 +103,29 @@ export class DrinkGameEffects {
   @Effect()
   createMemberOnSuccess$ = this._actions$.pipe(
     ofType(DrinkGameActions.ModifyMemberSInState),
+    map(({}) => ({ type: DrinkGameActions.SetDataToLs }))
+  );
+
+  @Effect()
+  generateNewQueue$ = this._actions$.pipe(
+    ofType(DrinkGameActions.GenereteNewQueue),
+    withLatestFrom(
+      this._store.select(selectIndexOfGame),
+      this._store.select(selectPlayers),
+      (action, gameIndex, players) => ({ action, gameIndex, players })
+    ),
+    map(({ action, gameIndex, players }) => {
+      const queuePlayers = this._gameLifeCycleService.genereteNewQueue(players);
+      return {
+        type: DrinkGameActions.AddToStoreNewQueue,
+        payload: { gameIndex, queuePlayers },
+      };
+    })
+  );
+
+  @Effect()
+  generateNewQueueSuccess$ = this._actions$.pipe(
+    ofType(DrinkGameActions.AddToStoreNewQueue),
     map(({}) => ({ type: DrinkGameActions.SetDataToLs }))
   );
 

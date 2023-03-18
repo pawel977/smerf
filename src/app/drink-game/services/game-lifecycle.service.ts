@@ -66,19 +66,15 @@ export class GameLifecycleService {
     this._localStoradgeService.saveData(this._key, JSON.stringify(data));
   }
 
-  genereteNewQueue(gameName: string) {
-    const data = this.getData();
-    const currentGameObjAndIndex: { game: any; index: number } =
-      this.getCurrentGameObject(gameName);
+  genereteNewQueue(players: Player[] = []): QueuePlayer[] {
+    const arrayOfQueuePlayers = [];
+    const mapOfPlayers = players.map(item => new QueuePlayer(item));
 
-    const queuePlayers: QueuePlayer[] =
-      currentGameObjAndIndex.game.membersOfGame.map(
-        (item: Player) => new QueuePlayer(item)
-      );
-    queuePlayers.push(...queuePlayers);
-    queuePlayers.push(...queuePlayers);
-    data[currentGameObjAndIndex.index].queuePlayers = queuePlayers;
-    this._localStoradgeService.saveData(this._key, JSON.stringify(data));
+    for (let i = 0; i < 7; i++) {
+      const index = Math.floor(Math.random() * mapOfPlayers.length);
+      arrayOfQueuePlayers.push(mapOfPlayers[index]);
+    }
+    return arrayOfQueuePlayers;
   }
 
   getQueuePlayers(gameName: string) {

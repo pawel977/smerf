@@ -36,6 +36,12 @@ export const selectPlayers = createSelector(selectCurrentGame, state => {
   }
   return [];
 });
+export const selectQueuePlayers = createSelector(selectCurrentGame, state => {
+  if (state) {
+    return state?.queuePlayers;
+  }
+  return [];
+});
 
 export const selectIndexOfGame = createSelector(
   selectCurrentGameName,

@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { Game } from '../classes/game';
 import { DrinkGameState } from './drink-game.reducer';
 import { Player } from '../classes/player';
+import { QueuePlayer } from '../classes/queue-player';
 
 const moduleName = '[Drink Game]';
 export enum DrinkGameActions {
@@ -14,6 +15,8 @@ export enum DrinkGameActions {
   SetDataToLs = `[Drink Game] SetDataToLs`,
   CreateMember = `[Drink Game] CreateMember`,
   ModifyMemberSInState = `[Drink Game] ModifyMemberSInState`,
+  GenereteNewQueue = `[Drink Game] GenereteNewQueue`,
+  AddToStoreNewQueue = `[Drink Game] AddToStoreNewQueue`,
 }
 
 export class SetCurrentGame implements Action {
@@ -51,6 +54,16 @@ export class ModifyMemberSInState implements Action {
   constructor(public payload: { gameIndex: number; player: Player }) {}
 }
 
+export class GenereteNewQueue implements Action {
+  readonly type = DrinkGameActions.GenereteNewQueue;
+}
+
+export class AddToStoreNewQueue implements Action {
+  readonly type = DrinkGameActions.AddToStoreNewQueue;
+  constructor(
+    public payload: { gameIndex: number; queuePlayers: QueuePlayer[] }
+  ) {}
+}
 export type DrinkGameUnion =
   | SetCurrentGame
   | ClearCurrentGame
@@ -60,4 +73,6 @@ export type DrinkGameUnion =
   | CrateNewGameOnSuccess
   | SetDataToLs
   | CreateMember
-  | ModifyMemberSInState;
+  | ModifyMemberSInState
+  | GenereteNewQueue
+  | AddToStoreNewQueue;

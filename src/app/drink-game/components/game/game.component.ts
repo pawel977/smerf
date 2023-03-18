@@ -135,8 +135,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   handleGenereteNewQueue() {
-    // this.gameLifecycleService.genereteNewQueue(this._currentGameName.value);
-    // this.setQueue();
+    this._store.dispatch({ type: DrinkGameActions.GenereteNewQueue });
   }
   setQueue() {
     //this.queuePlayers$.next(
