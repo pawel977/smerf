@@ -83,14 +83,17 @@ export class DrinkGameEffects {
       })
     ),
     map(({ action, players, gameIndex }: any) => {
+      console.log({ action, players, gameIndex });
       const playerExist =
         players.findIndex(
-          (player: Player) => player.nick === action.payload.nick
+          (player: Player) => player.nick === action.payload.data.nick
         ) !== -1;
-      if (playerExist) {
+      if (playerExist && !action.payload.isModify) {
         throw Error('Gracz o tym imieniu już istnieje!');
       }
-      const player = this._gameLifeCycleService.createNewPlayer(action.payload);
+      const player = this._gameLifeCycleService.createNewPlayer(
+        action.payload.data
+      );
       return {
         type: DrinkGameActions.ModifyMemberSInState,
         payload: { gameIndex, player },

@@ -17,9 +17,10 @@ export class PlayerCardComponent {
   constructor() {}
 
   onChangeIsDrinkingActive(event: any, playerData: Player): void {
+    let copyPlayer = new Player(playerData);
     const valueCheckbox = event.checked;
-    playerData.setCzyWciazPije(valueCheckbox);
-    this.emitModifyUser.emit(playerData);
+    copyPlayer.setCzyWciazPije(valueCheckbox);
+    this.emitModifyUser.emit(copyPlayer);
   }
 
   editPlayer() {

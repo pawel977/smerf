@@ -3,7 +3,7 @@
     <div mat-card-avatar class="example-header-image">
       <img [src]="data?.getImg()">
     </div>
-    <mat-card-title>{{data?.nick}}</mat-card-title>
+    <mat-card-title>{{data?.getNick()}}</mat-card-title>
     <mat-card-subtitle>Edycja zawodnika</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image class="img" [src]="form.get('imgUrl')?.value">

@@ -44,7 +44,7 @@ export class SetDataToLs implements Action {
 
 export class CreateMember implements Action {
   readonly type = DrinkGameActions.CreateMember;
-  constructor(public payload: { nick: string; imgUrl: string }) {}
+  constructor(public payload: { data: Partial<Player>; isModify?: boolean }) {}
 }
 export class ModifyMemberSInState implements Action {
   readonly type = DrinkGameActions.ModifyMemberSInState;

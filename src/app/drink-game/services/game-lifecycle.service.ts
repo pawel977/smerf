@@ -49,13 +49,9 @@ export class GameLifecycleService {
     return { game: <Object>data[index], index };
   }
 
-  public createNewPlayer(data: any): Player {
-    const { nick, imgUrl } = data;
-    const newPlayer = new Player({ nick, imgUrl });
-    if (imgUrl.length > 0) {
-      newPlayer.setImg(imgUrl);
-    }
-    return newPlayer;
+  public createNewPlayer(data: Partial<Player>): Player {
+    console.log({ data });
+    return new Player(data);
   }
 
   modifyUser(event: Player, i: number, gameName: string) {

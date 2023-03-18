@@ -75,7 +75,7 @@ export class GameComponent implements OnInit, OnDestroy {
       }
       this._store.dispatch({
         type: DrinkGameActions.CreateMember,
-        payload: { nick: result.nick, imgUrl: result?.imgUrl },
+        payload: { data: result },
       });
     });
   }
@@ -88,26 +88,32 @@ export class GameComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleEmitModifyUser(event: Player, i: number) {
-    //   this.gameLifecycleService.modifyUser(event, i, this._currentGameName.value);
+  handleEmitModifyUser(event: Player) {
+    this._store.dispatch({
+      type: DrinkGameActions.CreateMember,
+      payload: { data: event, isModify: true },
+    });
   }
 
   handleOpenEditPlayerModal(i: number) {
-    const dialogRef = this.dialog.open(EditPlayerComponent, {
-      width: '500px',
-      //data: this.players$.value[i],
-    });
+    this._store
+      .select(selectPlayers)
+      .pipe(first())
+      .subscribe((players: Player[]) => {
+        const dialogRef = this.dialog.open(EditPlayerComponent, {
+          width: '500px',
+          data: players[i],
+        });
 
-    dialogRef.afterClosed().subscribe((data: Player) => {
-      if (data) {
-        // this.gameLifecycleService.modifyUser(
-        //   data,
-        //   i,
-        //   this._currentGameName.value
-        // );
-        //    this.setPlayers();
-      }
-    });
+        dialogRef.afterClosed().subscribe((data: Player) => {
+          if (data) {
+            this._store.dispatch({
+              type: DrinkGameActions.CreateMember,
+              payload: { data, isModify: true },
+            });
+          }
+        });
+      });
   }
 
   removePlayerOnModal() {

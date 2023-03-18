@@ -13,6 +13,7 @@ export class Game {
     Object.assign(this, {
       ...params,
       membersOfGame: this.getMappedMembers(params.membersOfGame),
+      queuePlayers: this.getMappedQueueMembers(params.queuePlayers),
     });
   }
 
@@ -26,5 +27,8 @@ export class Game {
 
   private getMappedMembers(membersOfGame: Player[] = []): Player[] {
     return membersOfGame.map((player: Player) => new Player(player));
+  }
+  private getMappedQueueMembers(membersOfQueue: QueuePlayer[] = []) {
+    return membersOfQueue.map((player: QueuePlayer) => new QueuePlayer(player));
   }
 }
