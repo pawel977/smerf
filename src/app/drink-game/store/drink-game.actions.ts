@@ -48,7 +48,7 @@ export class CreateMember implements Action {
 }
 export class ModifyMemberSInState implements Action {
   readonly type = DrinkGameActions.ModifyMemberSInState;
-  constructor(public payload: { gameIndex: number; player: any }) {}
+  constructor(public payload: { gameIndex: number; player: Player }) {}
 }
 
 export type DrinkGameUnion =

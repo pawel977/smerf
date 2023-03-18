@@ -10,14 +10,21 @@ export class Game {
   config: Config;
 
   constructor(params: Partial<Game>) {
-    Object.assign(this, params);
+    Object.assign(this, {
+      ...params,
+      membersOfGame: this.getMappedMembers(params.membersOfGame),
+    });
   }
 
   public setMembersOfGame(players: Player[]) {
     this.membersOfGame = players;
   }
 
-  public get MembersOfGame(): Player[] {
+  public getMembersOfGame(): Player[] {
     return this.membersOfGame;
+  }
+
+  private getMappedMembers(membersOfGame: Player[] = []): Player[] {
+    return membersOfGame.map((player: Player) => new Player(player));
   }
 }

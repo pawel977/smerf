@@ -22,7 +22,7 @@ export const selectCurrentGame = createSelector(
   (gameName, gameList: Game[]) => {
     if (gameName !== null) {
       const index = gameList.findIndex(
-        (game: Game) => game.gameName === gameName
+        (game: Game) => game?.gameName === gameName
       );
       return gameList[index];
     }
@@ -41,7 +41,7 @@ export const selectIndexOfGame = createSelector(
   selectCurrentGameName,
   selectGamesList,
   (name: any, membersList: any[]) => {
-    return membersList?.findIndex(game => game.gameName === name);
+    return membersList?.findIndex(game => game?.gameName === name);
   }
 );
 
@@ -52,7 +52,7 @@ export const selectIsGameExist = createSelector(
     if (!gameName) {
       return false;
     }
-    return gameList?.findIndex(game => game.gameName === gameName) !== -1;
+    return gameList?.findIndex(game => game?.gameName === gameName) !== -1;
   }
 );
 

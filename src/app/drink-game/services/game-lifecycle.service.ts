@@ -22,13 +22,20 @@ export class GameLifecycleService {
   ) {}
   public getData(): Game[] {
     const data = this._localStoradgeService.getData(this._key);
+    let gamesArray: Game[] = [];
     if (!data || data?.length < 1) {
       return [];
     }
+
     const res = JSON.parse(data);
-    return res.map((item: any) => {
-      return new Game(item);
+    res.forEach((item: any) => {
+      gamesArray.push(new Game(item));
     });
+    //
+
+    console.log({ gamesArray });
+
+    return gamesArray;
   }
 
   public getCurrentGameObject(gameNameString: string): {

@@ -1,6 +1,6 @@
 <mat-card class="example-card" *ngIf="playerData">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image">
+    <div mat-card-avatar class="example-header-image" *ngIf="playerData?.getImg()">
       <img [src]="playerData?.getImg()">
     </div>
     <mat-card-title>

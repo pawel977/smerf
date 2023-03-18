@@ -71,7 +71,7 @@ export class DrinkGameEffects {
   );
 
   @Effect()
-  createMember = this._actions$.pipe(
+  createMember$ = this._actions$.pipe(
     ofType(DrinkGameActions.CreateMember),
     withLatestFrom(
       this._store.select(selectPlayers),
@@ -90,16 +90,18 @@ export class DrinkGameEffects {
       if (playerExist) {
         throw Error('Gracz o tym imieniu już istnieje!');
       }
-
       const player = this._gameLifeCycleService.createNewPlayer(action.payload);
-      return { action, player, gameIndex };
-    }),
-    map(({ gameIndex, player }) => {
       return {
         type: DrinkGameActions.ModifyMemberSInState,
         payload: { gameIndex, player },
       };
     })
+  );
+
+  @Effect()
+  createMemberOnSuccess$ = this._actions$.pipe(
+    ofType(DrinkGameActions.ModifyMemberSInState),
+    map(({}) => ({ type: DrinkGameActions.SetDataToLs }))
   );
 
   constructor(
